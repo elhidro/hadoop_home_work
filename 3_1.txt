@@ -1,0 +1,36 @@
+docker run --hostname=quickstart.cloudera --privileged=true -t -i -v/Users/user/Desktop/Sprint/hadoop:/src --publish-all=true -p 8888 cloudera/quickstart /usr/bin/docker-quickstart
+________________________________________________________________________________________
+
+
+hadoop fs -put /src/*  /user/cloudera
+
+hadoop fs -ls /user/cloudera
+Found 4 items
+-rw-r--r--   1 root cloudera     736519 2022-12-08 13:16 /user/cloudera/voyna-i-mir-tom-1.txt
+-rw-r--r--   1 root cloudera     770324 2022-12-08 13:16 /user/cloudera/voyna-i-mir-tom-2.txt
+-rw-r--r--   1 root cloudera     843205 2022-12-08 13:16 /user/cloudera/voyna-i-mir-tom-3.txt
+-rw-r--r--   1 root cloudera     697960 2022-12-08 13:16 /user/cloudera/voyna-i-mir-tom-4.txt
+
+
+hdfs dfs -getmerge /user/cloudera/* /output.txt
+hdfs dfs -rm  /user/cloudera/*
+hdfs dfs -put /output.txt  /user/cloudera
+
+
+hdfs dfs -chmod 755 /user/cloudera/output.txt
+hdfs dfs -ls  /user/cloudera
+Found 1 items
+-rwxr-xr-x   1 root cloudera    3048008 2022-12-08 15:57 /user/cloudera/output.txt
+
+hdfs dfs -du  -h /user/cloudera/output.txt
+2.9 M  2.9 M  /user/cloudera/output.txt
+
+
+hdfs dfs -setrep -w 2 /user/cloudera/output.txt 
+Replication 2 set: /user/cloudera/output.txt
+hdfs dfs -du  -h /user/cloudera/output.txt
+2.9 M  5.8 M  /user/cloudera/output.txt
+
+
+hdfs dfs -cat /user/cloudera/output.txt | wc -l
+10272
