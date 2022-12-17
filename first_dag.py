@@ -1,6 +1,5 @@
 from datetime import datetime
 from airflow import DAG
-from airflow.operators.bash import BashOperator
 from airflow.operators.python_operator import PythonOperator
 from random import randint
 
